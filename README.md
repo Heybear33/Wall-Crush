@@ -117,6 +117,18 @@ VITE_ADMIN_EMAILS=admin@example.com
 - 관리자는 훈련명, 날짜, 시간, 장소, 메모를 등록/수정/삭제할 수 있습니다.
 - 참석 기록은 `training_participants` 테이블에 저장됩니다.
 
+## 카카오톡 링크 로그인 안내
+
+Google 정책상 카카오톡, 인스타그램, 네이버앱 같은 앱 안의 브라우저에서는 Google 로그인이 차단될 수 있습니다. 이 경우 앱 화면에 외부 브라우저 안내가 표시됩니다.
+
+멤버에게는 아래처럼 안내하면 됩니다.
+
+```txt
+카카오톡 안에서는 Google 로그인이 막힐 수 있습니다.
+링크를 연 뒤 오른쪽 위 메뉴에서 Chrome 또는 Safari로 열어주세요.
+주소: https://wall-crush.vercel.app
+```
+
 ## 6. Vercel 배포 방법
 
 1. 이 프로젝트를 GitHub 저장소에 올립니다.

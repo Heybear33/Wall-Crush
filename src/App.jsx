@@ -62,6 +62,7 @@ function App() {
   const [editingTrainingId, setEditingTrainingId] = useState(null);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const blockedLoginBrowser = isBlockedLoginBrowser();
 
   const user = session?.user;
   const userEmail = user?.email?.toLowerCase();
@@ -171,6 +172,13 @@ function App() {
 
   async function signInWithGoogle() {
     if (!supabase) return;
+    if (blockedLoginBrowser) {
+      setMessage(
+        "카카오톡, 인스타그램, 네이버앱 안에서는 Google 로그인이 막힙니다. 오른쪽 위 메뉴에서 Chrome 또는 Safari로 열어주세요."
+      );
+      return;
+    }
+
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -444,6 +452,8 @@ function App() {
       {message && <div className="notice">{message}</div>}
 
       <main className="dashboard">
+        {blockedLoginBrowser && !user && <ExternalBrowserNotice />}
+
         <section className="training-hero">
           <div className="section-heading">
             <PanelTitle icon={<CalendarDays />} title="훈련 일정" />
@@ -591,6 +601,19 @@ function Shell({ children, centerText }) {
     <div className="app-shell">
       {centerText ? <div className="center-text">{centerText}</div> : children}
     </div>
+  );
+}
+
+function ExternalBrowserNotice() {
+  return (
+    <section className="external-browser-notice">
+      <strong>Google 로그인은 외부 브라우저에서 가능합니다</strong>
+      <p>
+        카카오톡, 인스타그램, 네이버앱 안에서 열면 Google 정책 때문에 로그인이
+        차단됩니다. 오른쪽 위 메뉴에서 Chrome 또는 Safari로 열어주세요.
+      </p>
+      <span>{window.location.origin}</span>
+    </section>
   );
 }
 
@@ -1038,6 +1061,21 @@ function formatDate(value) {
     day: "numeric",
     weekday: "short",
   }).format(new Date(`${value}T00:00:00`));
+}
+
+function isBlockedLoginBrowser() {
+  if (typeof navigator === "undefined") return false;
+
+  const userAgent = navigator.userAgent.toLowerCase();
+  return [
+    "kakaotalk",
+    "instagram",
+    "fban",
+    "fbav",
+    "naver",
+    "line",
+    "wv",
+  ].some((keyword) => userAgent.includes(keyword));
 }
 
 export default App;

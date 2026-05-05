@@ -486,6 +486,36 @@ dd {
   border-radius: 8px;
 }
 
+.external-browser-notice {
+  display: grid;
+  gap: 8px;
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  padding: 16px 18px;
+  color: #7a3d00;
+  background: #fff6df;
+  border: 1px solid #ffd28a;
+  border-radius: 8px;
+}
+
+.external-browser-notice strong {
+  color: #5f2f00;
+}
+
+.external-browser-notice p {
+  margin: 0;
+}
+
+.external-browser-notice span {
+  width: fit-content;
+  padding: 6px 8px;
+  color: #0d355a;
+  background: #ffffff;
+  border: 1px solid #ffd28a;
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+
 .empty-text {
   margin: 0;
   color: #5a7186;
