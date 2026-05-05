@@ -1,0 +1,426 @@
+:root {
+  color: #12314f;
+  background: #e7f5ff;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 32px;
+  background:
+    linear-gradient(135deg, rgba(10, 132, 255, 0.18), transparent 34%),
+    linear-gradient(180deg, #ecf8ff 0%, #c9ebff 100%);
+}
+
+.center-text,
+.login-panel {
+  width: min(440px, 100%);
+  margin: 12vh auto 0;
+  padding: 32px;
+  color: #0d355a;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(74, 161, 220, 0.32);
+  border-radius: 8px;
+  box-shadow: 0 24px 70px rgba(13, 72, 124, 0.16);
+}
+
+.login-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.login-panel h1,
+.topbar h1 {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.login-panel p {
+  margin: 0;
+  color: #4b6580;
+}
+
+.brand-mark {
+  width: fit-content;
+  padding: 6px 10px;
+  color: #ffffff;
+  background: #087dcc;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.topbar,
+.summary-strip,
+.content-grid,
+.ops-grid {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  color: #167ac6;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #355a78;
+}
+
+.account strong {
+  padding: 6px 9px;
+  color: #075f9e;
+  background: #dff3ff;
+  border: 1px solid #a6d9f6;
+  border-radius: 6px;
+}
+
+.dashboard {
+  display: grid;
+  gap: 20px;
+}
+
+.summary-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metric,
+.panel,
+.runner-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(74, 161, 220, 0.28);
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(13, 72, 124, 0.1);
+}
+
+.metric {
+  display: grid;
+  gap: 8px;
+  padding: 20px;
+}
+
+.metric svg {
+  color: #0b7fcc;
+}
+
+.metric span,
+dt,
+.race-item span,
+.race-item small,
+.runner-heading span {
+  color: #5a7186;
+}
+
+.metric strong {
+  color: #063c66;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.ops-grid,
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.55fr);
+  gap: 20px;
+}
+
+.panel {
+  padding: 20px;
+}
+
+.panel.wide {
+  min-width: 0;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.panel-title h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.panel-title svg {
+  color: #0b7fcc;
+}
+
+.form-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.race-form-grid {
+  display: grid;
+  gap: 10px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  color: #133a5a;
+  background: #f8fcff;
+  border: 1px solid #b7ddf4;
+  border-radius: 6px;
+  outline: none;
+}
+
+textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #0b82d8;
+  box-shadow: 0 0 0 3px rgba(11, 130, 216, 0.15);
+}
+
+.check-row,
+.button-row,
+.runner-actions,
+.row-actions,
+.attendance-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.check-row input {
+  width: 18px;
+  min-height: 18px;
+}
+
+.primary-action,
+.secondary-action,
+.icon-button,
+.row-actions button,
+.attendance {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.primary-action {
+  color: #ffffff;
+  background: #087dcc;
+}
+
+.secondary-action,
+.icon-button,
+.row-actions button {
+  color: #075f9e;
+  background: #dff3ff;
+  border: 1px solid #a6d9f6;
+}
+
+.runner-list,
+.race-list {
+  display: grid;
+  gap: 12px;
+}
+
+.runner-card {
+  padding: 18px;
+}
+
+.runner-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.runner-heading h3 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+}
+
+.injury {
+  height: fit-content;
+  padding: 5px 8px;
+  color: #a73535;
+  background: #fff0f0;
+  border: 1px solid #ffc9c9;
+  border-radius: 6px;
+  font-size: 0.78rem;
+}
+
+.record-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.record-grid div {
+  padding: 10px;
+  background: #f3faff;
+  border-radius: 6px;
+}
+
+dt {
+  margin-bottom: 4px;
+  font-size: 0.78rem;
+}
+
+dd {
+  margin: 0;
+  color: #0c365a;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.memo {
+  margin: 12px 0 0;
+  color: #46637d;
+}
+
+.runner-actions {
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #d9ecf8;
+}
+
+.attendance {
+  width: 42px;
+  padding: 0;
+  color: #0b639e;
+  background: #e9f7ff;
+  border: 1px solid #b7ddf4;
+}
+
+.attendance.checked {
+  color: #ffffff;
+  background: #11a8a0;
+  border-color: #11a8a0;
+}
+
+.race-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  background: #f5fbff;
+  border: 1px solid #d9ecf8;
+  border-radius: 8px;
+}
+
+.race-item div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.notice,
+.loading {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  padding: 12px 14px;
+  color: #075f9e;
+  background: #dff3ff;
+  border: 1px solid #a6d9f6;
+  border-radius: 8px;
+}
+
+.empty-text {
+  margin: 0;
+  color: #5a7186;
+}
+
+@media (max-width: 920px) {
+  .app-shell {
+    padding: 20px;
+  }
+
+  .topbar,
+  .ops-grid,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    display: grid;
+  }
+
+  .summary-strip {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .form-grid,
+  .record-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .account,
+  .runner-heading,
+  .runner-actions,
+  .race-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
