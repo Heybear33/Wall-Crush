@@ -27,11 +27,31 @@ create table if not exists public.races (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   race_date date,
+  -- 아래 컬럼은 기존 운영 데이터 호환용입니다. 현재 앱 화면에서는 대회명, 날짜, 장소만 사용합니다.
   distance text not null default '10km',
   location text,
   target_record text,
   memo text,
   created_at timestamptz not null default now()
+);
+
+create table if not exists public.training_schedules (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  training_date date not null,
+  training_time text,
+  location text,
+  memo text,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.training_participants (
+  id uuid primary key default gen_random_uuid(),
+  training_id uuid not null references public.training_schedules(id) on delete cascade,
+  runner_id uuid references public.runners(id) on delete set null,
+  user_email text not null,
+  created_at timestamptz not null default now(),
+  unique (training_id, user_email)
 );
 
 create table if not exists public.admins (
@@ -46,6 +66,8 @@ on conflict (email) do nothing;
 alter table public.runners enable row level security;
 alter table public.attendances enable row level security;
 alter table public.races enable row level security;
+alter table public.training_schedules enable row level security;
+alter table public.training_participants enable row level security;
 alter table public.admins enable row level security;
 
 create or replace function public.is_admin()
@@ -76,6 +98,19 @@ on public.runners for select
 to authenticated
 using (lower(email) = lower(auth.jwt() ->> 'email'));
 
+drop policy if exists "members can register own runner profile" on public.runners;
+create policy "members can register own runner profile"
+on public.runners for insert
+to authenticated
+with check (lower(email) = lower(auth.jwt() ->> 'email'));
+
+drop policy if exists "members can update own runner profile" on public.runners;
+create policy "members can update own runner profile"
+on public.runners for update
+to authenticated
+using (lower(email) = lower(auth.jwt() ->> 'email'))
+with check (lower(email) = lower(auth.jwt() ->> 'email'));
+
 drop policy if exists "admins can manage runners" on public.runners;
 create policy "admins can manage runners"
 on public.runners for all
@@ -104,9 +139,10 @@ using (public.is_admin())
 with check (public.is_admin());
 
 drop policy if exists "authenticated users can view races" on public.races;
-create policy "authenticated users can view races"
+drop policy if exists "public can view races" on public.races;
+create policy "public can view races"
 on public.races for select
-to authenticated
+to anon, authenticated
 using (true);
 
 drop policy if exists "admins can manage races" on public.races;
@@ -115,3 +151,40 @@ on public.races for all
 to authenticated
 using (public.is_admin())
 with check (public.is_admin());
+
+drop policy if exists "public can view training schedules" on public.training_schedules;
+create policy "public can view training schedules"
+on public.training_schedules for select
+to anon, authenticated
+using (true);
+
+drop policy if exists "admins can manage training schedules" on public.training_schedules;
+create policy "admins can manage training schedules"
+on public.training_schedules for all
+to authenticated
+using (public.is_admin())
+with check (public.is_admin());
+
+drop policy if exists "members can view own training participation" on public.training_participants;
+create policy "members can view own training participation"
+on public.training_participants for select
+to authenticated
+using (
+  lower(user_email) = lower(auth.jwt() ->> 'email')
+  or public.is_admin()
+);
+
+drop policy if exists "members can join training" on public.training_participants;
+create policy "members can join training"
+on public.training_participants for insert
+to authenticated
+with check (lower(user_email) = lower(auth.jwt() ->> 'email'));
+
+drop policy if exists "members can cancel own training participation" on public.training_participants;
+create policy "members can cancel own training participation"
+on public.training_participants for delete
+to authenticated
+using (
+  lower(user_email) = lower(auth.jwt() ->> 'email')
+  or public.is_admin()
+);

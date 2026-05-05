@@ -77,7 +77,9 @@ button {
 .topbar,
 .summary-strip,
 .content-grid,
-.ops-grid {
+.ops-grid,
+.training-hero,
+.subdued-panel {
   width: min(1240px, 100%);
   margin: 0 auto;
 }
@@ -126,9 +128,15 @@ button {
   gap: 14px;
 }
 
+.muted-summary {
+  opacity: 0.72;
+}
+
 .metric,
 .panel,
-.runner-card {
+.runner-card,
+.training-hero,
+.training-card {
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(74, 161, 220, 0.28);
   border-radius: 8px;
@@ -166,6 +174,82 @@ dt,
   gap: 20px;
 }
 
+.training-hero {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-heading .panel-title {
+  margin-bottom: 0;
+}
+
+.section-heading span {
+  color: #5a7186;
+}
+
+.training-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.training-card {
+  padding: 18px;
+  box-shadow: none;
+}
+
+.training-card.joined {
+  border-color: #11a8a0;
+  background: #f0fffd;
+}
+
+.training-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.training-main h3 {
+  margin: 6px 0 8px;
+  color: #063c66;
+  font-size: 1.2rem;
+}
+
+.training-main p,
+.training-main small,
+.training-date,
+.participant-count {
+  color: #5a7186;
+}
+
+.training-main p,
+.participant-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.training-date {
+  font-weight: 800;
+}
+
+.training-actions {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+  min-width: 128px;
+}
+
 .panel {
   padding: 20px;
 }
@@ -193,6 +277,19 @@ dt,
 .form-panel {
   display: grid;
   gap: 12px;
+}
+
+.registration-panel p {
+  margin: 0;
+  color: #5a7186;
+}
+
+.admin-runner-form {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #d9ecf8;
 }
 
 .form-grid {
@@ -279,6 +376,10 @@ textarea:focus {
 .race-list {
   display: grid;
   gap: 12px;
+}
+
+.compact-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .runner-card {
@@ -397,7 +498,9 @@ dd {
 
   .topbar,
   .ops-grid,
-  .content-grid {
+  .content-grid,
+  .training-list,
+  .compact-list {
     grid-template-columns: 1fr;
   }
 
@@ -407,6 +510,16 @@ dd {
 
   .summary-strip {
     grid-template-columns: 1fr;
+  }
+
+  .section-heading,
+  .training-main {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .training-actions {
+    justify-items: start;
   }
 }
 
