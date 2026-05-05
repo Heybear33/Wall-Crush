@@ -30,10 +30,7 @@ const emptyRunner = {
 const emptyRace = {
   title: "",
   race_date: "",
-  distance: "10km",
   location: "",
-  target_record: "",
-  memo: "",
 };
 
 const attendanceDays = ["tue", "thu"];
@@ -167,9 +164,15 @@ function App() {
     event.preventDefault();
     if (!isAdmin || !supabase) return;
 
+    const payload = {
+      title: raceForm.title,
+      race_date: raceForm.race_date || null,
+      location: raceForm.location,
+    };
+
     const result = editingRaceId
-      ? await supabase.from("races").update(raceForm).eq("id", editingRaceId)
-      : await supabase.from("races").insert(raceForm);
+      ? await supabase.from("races").update(payload).eq("id", editingRaceId)
+      : await supabase.from("races").insert(payload);
 
     if (result.error) {
       setMessage(result.error.message);
@@ -232,10 +235,7 @@ function App() {
     setRaceForm({
       title: race.title || "",
       race_date: race.race_date || "",
-      distance: race.distance || "10km",
       location: race.location || "",
-      target_record: race.target_record || "",
-      memo: race.memo || "",
     });
   }
 
@@ -357,9 +357,7 @@ function App() {
                 <article className="race-item" key={race.id}>
                   <div>
                     <strong>{race.title}</strong>
-                    <span>
-                      {race.race_date || "날짜 미정"} · {race.distance}
-                    </span>
+                    <span>{race.race_date || "날짜 미정"}</span>
                     <small>{race.location}</small>
                   </div>
                   {isAdmin && (
@@ -492,7 +490,7 @@ function RaceForm({ form, setForm, editingId, onSubmit, onCancel }) {
   return (
     <form className="panel form-panel" onSubmit={onSubmit}>
       <PanelTitle icon={<Trophy />} title={editingId ? "대회 수정" : "대회 등록"} />
-      <div className="form-grid">
+      <div className="race-form-grid">
         <input
           required
           placeholder="대회명"
@@ -504,31 +502,12 @@ function RaceForm({ form, setForm, editingId, onSubmit, onCancel }) {
           value={form.race_date}
           onChange={(e) => setForm({ ...form, race_date: e.target.value })}
         />
-        <select
-          value={form.distance}
-          onChange={(e) => setForm({ ...form, distance: e.target.value })}
-        >
-          <option>10km</option>
-          <option>하프</option>
-          <option>풀코스</option>
-          <option>기타</option>
-        </select>
         <input
           placeholder="장소"
           value={form.location}
           onChange={(e) => setForm({ ...form, location: e.target.value })}
         />
-        <input
-          placeholder="목표 기록"
-          value={form.target_record}
-          onChange={(e) => setForm({ ...form, target_record: e.target.value })}
-        />
       </div>
-      <textarea
-        placeholder="메모"
-        value={form.memo}
-        onChange={(e) => setForm({ ...form, memo: e.target.value })}
-      />
       <div className="button-row">
         <button className="primary-action" type="submit">
           저장

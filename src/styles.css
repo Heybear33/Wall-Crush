@@ -201,6 +201,11 @@ dt,
   gap: 10px;
 }
 
+.race-form-grid {
+  display: grid;
+  gap: 10px;
+}
+
 input,
 select,
 textarea {
